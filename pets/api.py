@@ -13,14 +13,18 @@ class Api(object):
     api_key = 'your-api-key'
     locale = 'en_US'
 
+    def __fetch_data(self, url_extras=[]):
+        url = ''.join([self.base_url] + url_extras)
+        params = {'apikey': self.api_key, 'locale': self.locale}
+        request = requests.get(url, params=params)
+        return request.json()
+
     def master_list(self):
         """
         A list of all supported battle and vanity pets.
         """
 
-        params = {'apikey': self.api_key, 'locale': self.locale}
-        request = requests.get(self.base_url, params=params)
-        pets = request.json()
+        pets = self.__fetch_data()
         pets_list = pets['pets']
         return pets_list
 
@@ -29,10 +33,7 @@ class Api(object):
         This provides the data about an individual pet species.
         """
 
-        url = [self.base_url, 'species/', species_id]
-        params = {'apikey': self.api_key, 'locale': self.locale}
-        request = requests.get(''.join(url), params=params)
-        species = request.json()
+        species = self.__fetch_data(['species/', species_id])
         return species
 
     def ability(self, ability_id):
@@ -40,8 +41,5 @@ class Api(object):
         This provides data about a individual battle pet ability ID.
         """
 
-        url = [self.base_url, 'ability/', ability_id]
-        params = {'apikey': self.api_key, 'locale': self.locale}
-        request = requests.get(''.join(url), params=params)
-        ability = request.json()
+        ability = self.__fetch_data(['ability/', ability_id])
         return ability
