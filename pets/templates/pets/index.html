@@ -1,0 +1,13 @@
+<h1>Pets master list</h1>
+
+{% if pets_list %}
+    <ul>
+    {% for pet in pets_list %}
+        <li>
+            <a href="{% url 'species' pet.stats.speciesId %}">{{ pet.name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No pets are available.</p>
+{% endif %}

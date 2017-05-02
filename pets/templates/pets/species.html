@@ -1,0 +1,13 @@
+<h1>Species: {{ species.name }}</h1>
+
+<p>{{ species.description }}</p>
+<p>{{ species.source }}</p>
+
+<h3>Abilities:</h3>
+<ul>
+    {% for ability in species.abilities %}
+        <li>
+            <a href="{% url 'ability' ability.id %}">{{ ability.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
