@@ -9,11 +9,23 @@ class Api(object):
     An easy-to-use Python wrapper for the pets Battlenet API.
     """
 
-    base_url = 'https://us.api.battle.net/wow/pet/'
-    api_key = 'your-api-key'
-    locale = 'en_US'
+    def __init__(self, base_url='https://us.api.battle.net/wow/pet/',
+                 api_key='your-api-key', locale='en_US'):
+        """
+        Api constructor.
+        """
+        self.base_url = base_url
+        self.api_key = api_key
+        self.locale = locale
 
-    def __fetch_data(self, url_extras=[]):
+    def __fetch_data(self, url_extras=None):
+        """
+        Prepare url and make request.
+        """
+
+        if url_extras is None:
+            url_extras = []
+
         url = ''.join([self.base_url] + url_extras)
         params = {'apikey': self.api_key, 'locale': self.locale}
         request = requests.get(url, params=params)
